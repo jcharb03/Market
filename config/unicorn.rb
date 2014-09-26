@@ -14,7 +14,7 @@ stderr_path "/var/www/market/log/unicorn.log"
 stdout_path "/var/www/market/log/unicorn.log"
 
 # Unicorn socket
-listen "/tmp/unicorn.market.sock"
+listen "/var/sockets/unicorn.market.sock"
 
 # Number of processes
 # worker_processes 4
