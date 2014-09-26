@@ -11,7 +11,7 @@ pid "/var/www/market/pids/unicorn.pid"
 # stderr_path "/path/to/log/unicorn.log"
 # stdout_path "/path/to/log/unicorn.log"
 stderr_path "/var/www/market/log/unicorn.log"
-stdout_path "/var/www//log/unicorn.log"
+stdout_path "/var/www/market/log/unicorn.log"
 
 # Unicorn socket
 listen "/tmp/unicorn.market.sock"
