@@ -1,0 +1,3 @@
+class Book < Media
+
+end

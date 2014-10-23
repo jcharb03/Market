@@ -1,0 +1,3 @@
+class CD < Media
+
+end
