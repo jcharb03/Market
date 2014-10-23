@@ -8,6 +8,8 @@ class CreateMedia < ActiveRecord::Migration
       t.string :type
       t.string :secondary_info #plateform or album
       t.datetime :year_created
+      
+      t.belongs_to :user
       t.timestamps
     end
   end
