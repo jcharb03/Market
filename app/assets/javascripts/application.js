@@ -15,4 +15,21 @@
 //= require turbolinks
 //= require underscore
 //= require backbone
+
+
+var templateLoader = {};
+_.extend(templateLoader, Backbone.Events);
+
+
+
+$(function() {
+    $('link[rel="import"]').each(function() {
+	var url = $(this).attr('href');
+	$(this).load(url, function(data, status) {
+	    console.log("Fetched: " + id + " status: " + status);
+	    templateLoader.trigger("loaded");
+	});
+    });
+});
+
 //= require_tree .

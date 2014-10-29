@@ -1,0 +1,16 @@
+class TemplatesController < ApplicationController
+  layout false
+  
+  def root
+    template = params[:template]
+    if respond_to? template.to_sym
+      render "templates/" + template
+    else
+      render status: 404, plain: "Template could not be found"
+    end
+  end
+
+  def banner 
+
+  end
+end
