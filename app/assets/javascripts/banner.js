@@ -12,10 +12,7 @@ var BannerView = Backbone.View.extend({
 });
 
 
-$(function() {
-    console.log(templateLoader);
-    templateLoader.on("load:templates", function () {
-	new BannerView();
-	console.log("Hello");
-    });
+templateLoader.on("load:templates", function () {
+    console.log("Initializing banner");
+    window.bannerView = new BannerView();
 });
