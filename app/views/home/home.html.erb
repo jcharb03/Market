@@ -1,0 +1,20 @@
+<% content_for :templates do %>
+<link type="text/html" rel="import" href="/templates/banner.html" id="banner-template" />
+<link type="text/html" rel="import" href="/templates/menu.html" id="menu-template" />
+<% end %>
+
+<% content_for :backbone do %>
+<%= javascript_include_tag 'banner' %>
+<%= javascript_include_tag 'menu' %>
+<% end %>
+
+<div id="canvas">
+  <div class="container">
+    <div id="banner"></div>
+    <div class="row">
+      <div class="col-md-4">
+	<div id="menu"></div>
+      </div>
+    </div>
+  </div>
+</div>
