@@ -25,18 +25,19 @@ _.templateSettings = {
 var templateLoader = (function (Backbone,_, $) {
     var loader = {};
     _.extend(loader, Backbone.Events);
-    
+    $(startLoading);
+    return loader;
 
-
-    $(function() {
+    function startLoading() {
+	
 	var progress, links, link_ids;
-
+	
 	links = $('link[rel="import"]');
-
+	
 	link_ids = links.map(function () {
 	    return $(this).attr('id');
 	});
-
+	
 	progress = initHashFalse(link_ids);
 	
 	links.each(loadTemplate);
@@ -74,9 +75,8 @@ var templateLoader = (function (Backbone,_, $) {
 		return acc && next;
 	    }
 	}
-    });
+    }
 
-return loader;
 })(Backbone,_, jQuery);
 
 //= require_tree .
