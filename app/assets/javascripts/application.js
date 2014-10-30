@@ -62,7 +62,7 @@ var templateLoader = (function (Backbone,_, $) {
 	    console.log("template: " + id + " finished loading");
 
 	    if ( done ) { //All templates have been loaded
-		loader.trigger("load:templates:done");
+		loader.trigger("load:templates");
 	    }
 	    
 	    function orOperation(acc, next) {
