@@ -61,7 +61,7 @@ var templateLoader = (function (Backbone,_, $) {
 	    progress[id] = true;
 	    var done =_.chain(progress)
 		.values()
-		.reduce(orOperation)
+		.reduce(and)
 		.value();
 	    
 	    console.log("template: " + id + " finished loading");
@@ -70,8 +70,8 @@ var templateLoader = (function (Backbone,_, $) {
 		loader.trigger("load:templates");
 	    }
 	    
-	    function orOperation(acc, next) {
-		return acc || next;
+	    function and(acc, next) {
+		return acc && next;
 	    }
 	}
     });
