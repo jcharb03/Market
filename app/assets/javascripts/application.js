@@ -17,19 +17,61 @@
 //= require backbone
 
 
-var templateLoader = {};
-_.extend(templateLoader, Backbone.Events);
+var templateLoader = (function (Backbone,_, $) {
+    var loader = {};
+    _.extend(loader, Backbone.Events);
+    
 
 
+    $(function() {
+	var progress, links, link_ids;
 
-$(function() {
-    $('link[rel="import"]').each(function() {
-	var url = $(this).attr('href');
-	$(this).load(url, function(data, status) {
-	    console.log("Fetched: " + id + " status: " + status);
-	    templateLoader.trigger("loaded");
+	links = $('link[rel="import"]');
+
+	link_ids = links.map(function () {
+	    return $(this).attr('id');
 	});
+
+	progress = initHashFalse(link_ids);
+	
+	links.each(loadTemplate);
+	
+	function initHashFalse(keys) {
+	    var falses = _.times(keys.length, _.constant(false));
+	    return _.object(keys, falses);
+	}
+
+	function loadTemplate() {
+	    var url, id;
+	    
+	    url = $(this).attr('href');
+	    id = $(this).attr("id");
+	    console.log("async load: " + id );
+	    $(this).load(url, function () {
+		loadFinished(id);
+	    });
+	}
+
+	function loadFinished(id) {
+	    progress[id] = true;
+	    var done =_.chain(progress)
+		.values()
+		.reduce(orOperation)
+		.value();
+	    
+	    console.log("template: " + id + " finished loading");
+
+	    if ( done ) { //All templates have been loaded
+		loader.trigger("load:templates:done");
+	    }
+	    
+	    function orOperation(acc, next) {
+		return acc || next;
+	    }
+	}
     });
-});
+
+return loader;
+})(Backbone,_, jQuery);
 
 //= require_tree .
