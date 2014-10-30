@@ -7,12 +7,17 @@
   <%= csrf_meta_tags %>
   <script src="/assets/banner.js" type="text/javascript"> </script>
   <link type="text/html" rel="import"  href="/templates/banner.html" id="banner-template" />
+
+  <script>
+    window.uname = "<%= @userName %>";
+  </script>
 </head>
 <body>
-  <div class="container">
-    <div id="banner"></div>
-    <%= yield %>
-    
+  <div id="canvas">
+    <div class="container">
+      <div id="banner"></div>
+      <%= yield %>
+    </div>
   </div>
 </body>
 </html>
