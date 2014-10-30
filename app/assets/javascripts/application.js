@@ -17,6 +17,11 @@
 //= require backbone
 
 
+/* configure templating */
+_.templateSettings = {
+    interpolate: /\{\{(.+?)\}\}/g
+};
+
 var templateLoader = (function (Backbone,_, $) {
     var loader = {};
     _.extend(loader, Backbone.Events);
