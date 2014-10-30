@@ -1,0 +1,21 @@
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+#banner {
+	margin-top: 20px;
+}
+
+#canvas {
+	position: absolute;
+	top: 0;
+	bottom:0;
+	left:0;
+	right:0;
+  	background: linear-gradient(to top,#700000, #A00000) no-repeat;
+}
+
+body {
+
+}
