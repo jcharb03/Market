@@ -13,4 +13,8 @@ class TemplatesController < ApplicationController
   def banner 
 
   end
+  
+  def menu
+
+  end
 end
