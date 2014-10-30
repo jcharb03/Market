@@ -11,6 +11,7 @@ class CreateMedia < ActiveRecord::Migration
       
       t.belongs_to :user
       t.timestamps
+    #testing shite
     end
   end
 end
