@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def getUsername
-    @userName = User.all.first
+    @userName = User.all.first.name
   end
 end
