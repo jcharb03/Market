@@ -4,6 +4,7 @@ var Market = (function (Market) {
     Market.Model = Market.Model || {};
     
     Market.Model.Medium = Backbone.Model.extend({
+	urlRoot: '/media',
 	defaults: {
 	    title: "",
 	    author: "",
