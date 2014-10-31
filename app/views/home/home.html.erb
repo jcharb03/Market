@@ -2,12 +2,14 @@
 <link type="text/html" rel="import" href="/templates/banner.html" id="banner-template" />
 <link type="text/html" rel="import" href="/templates/menu.html" id="menu-template" />
 <link type="text/hmlt" rel="import" href="/templates/library.html" id="library-template" />
+<link type="text/html" rel="import" href="/templates/media.html" id="media-template" />
 <% end %>
 
 <% content_for :backbone do %>
 <%= javascript_include_tag 'banner' %>
 <%= javascript_include_tag 'menu' %>
 <%= javascript_include_tag 'library' %>
+<%= javascript_include_tag 'media' %> 
 <% end %>
 
 <div id="canvas">

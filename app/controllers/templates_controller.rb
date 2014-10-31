@@ -21,4 +21,8 @@ class TemplatesController < ApplicationController
   def library
 
   end
+
+  def media
+
+  end
 end
