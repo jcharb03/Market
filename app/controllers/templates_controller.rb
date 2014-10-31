@@ -17,4 +17,8 @@ class TemplatesController < ApplicationController
   def menu
 
   end
+
+  def library
+
+  end
 end
