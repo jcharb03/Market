@@ -10,12 +10,12 @@ var Market = (function (Market) {
 	    type: "",
 	    aux: "",
 	    created: "",
-	    owner: -1pp
+	    owner: -1
 	}
     });
     
     Market.Model.Media = Backbone.Collection.extend({
-	model: Medium
+	model: Market.Model.Medium
     });
 
 
@@ -24,7 +24,7 @@ var Market = (function (Market) {
 	initialize: function() {
 	    this.template = _.template($("#media-template").html());
 	    this.render();
-	}
+	},
 	
 	render : function () {
 	    this.$el.html(this.template());
