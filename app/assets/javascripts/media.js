@@ -32,7 +32,7 @@ var Market = (function (Market) {
 
 
     //Bind the Media Vies
-    var MediumDetailView = Backbone.View.extend({
+    Market.Views.MediumDetailView = Backbone.View.extend({
 	el: '#content',
 	initialize: function() {
 	    this.template = _.template($("#media-template").html());
@@ -58,7 +58,7 @@ var Market = (function (Market) {
 	
     });
 
-    var AddMediumView = Backbone.View.extend({
+    Market.Views.AddMediumView = Backbone.View.extend({
 	el: '#content',
 	initialize: function() {
 	    this.template = _.template($("#add-media-template").html());
