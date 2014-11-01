@@ -6,4 +6,13 @@ class ApplicationController < ActionController::Base
   def getUsername
     @userName = User.all.first.name
   end
+  
+  def getUserId
+    @userId = User.all.first.id
+  end
+  
+  def getSampleMediumId
+    userId = User.all.first.id
+    @mediaId = User.find(userId).media.first.id
+  end
 end
