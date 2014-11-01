@@ -60,14 +60,29 @@ var Market = (function (Market) {
 
     Market.Views.AddMediumView = Backbone.View.extend({
 	el: '#content',
+
+	events: {
+	    "change select": "updateLabels"
+	},
 	initialize: function() {
 	    this.template = _.template($("#add-media-template").html());
 	    this.render();
+
+	    this.authorLabel = this.$("#author-label");
+	    this.auxLabel = this.$("#aux-label");
 	},
 	
 	render : function () {
 	    this.$el.html(this.template());
 	    return this;
+	},
+
+	updateLabels: function() {
+	    var val = this.$('select').val()
+	    var kind = this.$('select option[value="'+val+'"]').html();
+	    kind = kind.toLowerCase();
+	    this.authorLabel.html(capitalize(getAuthorLabel(kind)));
+	    this.auxLabel.html(capitalize(getAuxLabel(kind)));
 	}
     });
 
@@ -82,6 +97,13 @@ var Market = (function (Market) {
 	}[kind] || 'author';
     }
 
+    function getAuxLabel(kind) {
+	return {
+	    music: "album",
+	    game: "platform"
+	}[kind] || "genre";
+    }
+
     function getGlyph(type) {
 	var elem, glyphType;
 	const defaultGlyphType = "glyphicon-ban-circle";
@@ -94,6 +116,11 @@ var Market = (function (Market) {
 	}[type]) || defaultGlyphType;
 
 	return "<span class='glyphicon "+glyphType+"'></span>";
+    }
+
+    function capitalize(str) {
+	return str[0].toUpperCase() +
+	    str.substring(1).toLowerCase();
     }
 
 })(Market || {});
