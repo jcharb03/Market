@@ -12,6 +12,17 @@ var Market = (function (Market) {
 	    aux: "",
 	    created: "",
 	    owner: -1
+	},
+	
+	parse: function (res) {
+	    return _.chain(res)
+		.extend({
+		    created: res.year_created,
+		    aux: res.secondary_info,
+		    owner: res.user_id
+		})
+		.pick("title","author", "created_at", "created", "aux", "kind", "owner")
+		.value();
 	}
     });
     
