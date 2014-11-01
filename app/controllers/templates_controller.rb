@@ -25,4 +25,8 @@ class TemplatesController < ApplicationController
   def media
 
   end
+  
+  def addMedia
+
+  end
 end

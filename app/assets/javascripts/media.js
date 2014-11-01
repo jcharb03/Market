@@ -58,8 +58,20 @@ var Market = (function (Market) {
 	
     });
 
-    
-    
+    var AddMediumView = Backbone.View.extend({
+	el: '#content',
+	initialize: function() {
+	    this.template = _.template($("#add-media-template").html());
+	    this.render();
+	},
+	
+	render : function () {
+	    this.$el.html(this.template());
+	    return this;
+	}
+    });
+
+
     return Market;
 
     function getAuthorLabel(kind) {
