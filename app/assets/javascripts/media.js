@@ -86,6 +86,14 @@ var Market = (function (Market) {
 	}
     });
 
+    templateLoader.on("load:templates", function() {
+	var standard = new Market.Model.Medium({id: window.mediumId});
+	standard.fetch({
+	    success: function (standard) {
+		new Market.Views.MediumDetailView({ model: standard });
+	    }
+	});
+    });
 
     return Market;
 
