@@ -8,7 +8,7 @@ var Market = (function (Market) {
 	defaults: {
 	    title: "",
 	    author: "",
-	    type: "",
+	    kind: "",
 	    aux: "",
 	    created: "",
 	    owner: -1
