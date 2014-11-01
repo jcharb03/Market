@@ -33,6 +33,7 @@ var Market = (function (Market) {
 
     //Bind the Media Vies
     var MediumDetailView = Backbone.View.extend({
+	el: '#content',
 	initialize: function() {
 	    this.template = _.template($("#media-template").html());
 	    this.render();
