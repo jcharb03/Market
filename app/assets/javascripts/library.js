@@ -14,11 +14,5 @@ var Market = (function (Market) {
 	}
     });
 
-
-
-    templateLoader.on("load:templates", function () {
-	new LibraryView();
-    });
-
     return Market;
 })(Market || {});
