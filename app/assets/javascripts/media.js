@@ -39,7 +39,20 @@ var Market = (function (Market) {
 	},
 	
 	render : function () {
-	    this.$el.html(this.template());
+	    this.$el.html(this.template(this.bindVar()));
+	    return this;
+	},
+
+	bindVar: function () {
+	    return _.chain(this.model.attributes)
+		.clone()
+		.extend({
+		    authorLabel: getAuthorLabel(this.model.get("kind")),
+		    createdLabel:'Year created',
+		    glyphicon: getGlyph(this.model.get("kind"))
+		    
+		})
+		.value();
 	}
 	
     });
@@ -48,6 +61,13 @@ var Market = (function (Market) {
     
     return Market;
 
+    function getAuthorLabel(kind) {
+	return {
+	    music: 'artist',
+	    movie: 'director',
+	    game:  'studio',
+	}[kind] || 'author';
+    }
 
     function getGlyph(type) {
 	var elem, glyphType;
@@ -57,14 +77,10 @@ var Market = (function (Market) {
 	    music: "glyphicon-music",
 	    movie: "glyphicon-film",
 	    book:  "glyphicon-book",
-	    game:  "glyphicon-tower"
+	    game:  "glyphicon-tower",
 	}[type]) || defaultGlyphType;
-	
-	elem = $("<span></span>");
-	elem.addClass("glyphicon");
-	elem.addClass(glyphType);
-	
-	return elem;
+
+	return "<span class='glyphicon "+glyphType+"'></span>";
     }
 
 })(Market || {});

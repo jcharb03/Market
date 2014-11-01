@@ -1,8 +1,18 @@
-<div>
-  <h2>{{title}}</h2>
-  <ul>
-    <li><p class="label">{{authorLabel}}:</p><p>{{author}}</p></li>
-    <li><p class="label">{{createdLabel}}:</p><p>{{created}}</p></li>
-    <li><p class="label">Posted:</p><p>{{created_at}}</p></li>
+<div class="content-pane">
+  <h2 class="title center-text">{{glyphicon}} {{title}}</h2>
+  <ul class="value-map">
+    <li class="kv">
+      <p class="key">{{authorLabel}}:</p>
+      <p class="value">{{author}}</p>
+    </li>
+
+    <li class="kv">
+      <p class="key">{{createdLabel}}:</p>
+      <p class="value">{{created}}</p>
+    </li>
+    
+    <li class="kv">
+      <p class="key">Posted:</p>
+      <p class="value">{{created_at}}</p></li>
   </ul>
 </div>
