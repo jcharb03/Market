@@ -1,8 +1,11 @@
 class MediaController < ApplicationController
   def index
     user_id = params[:user_id]
-    render json: User.find(user_id).media.as_json unless user_id.nil?
-    render json: Medium.all
+
+    media = Medium.all
+    media = User.find(user_id).media if user_id
+
+    render json: media.as_json
   end
 
   def show 
