@@ -10,6 +10,17 @@ var Market = (function (Market) {
 	render: function() {
 	    var data = [1, 2, 3, 4];
 	    this.$el.html(this.template({data: data}));
+
+	    var library = this.model.library();
+	    library.fetch({
+		success:function(library){
+		    console.log("Rendered library");
+		},
+		error:function(library){
+		    console.log("render error");
+		}
+	    });
+
 	    return this;
 	}
     });

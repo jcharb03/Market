@@ -4,7 +4,8 @@ var Market = (function (Market) {
 	routes: {
 	    "" : "home",
 	    "add" : "addMedium",
-	    "media/:id": "showMedium"
+	    "media/:id": "showMedium",
+	    "library" : "showLibrary"
 	},
 
 	addMedium: function() {
@@ -33,12 +34,9 @@ var Market = (function (Market) {
 	},
 
 	home: function() {
-	    console.log("Loading home");
-	    console.log("sample: " + window.mediumId);
 	    var medium = new Market.Model.Medium({id: window.mediumId});
 	    medium.fetch({
 		success:function(medium){
-		    console.log("success");
 		    $("#content").empty();
 		    new Market.Views.MediumDetailView({model: medium});
 		},
@@ -46,6 +44,37 @@ var Market = (function (Market) {
 		    console.log("failed to fetch model");
 		}
 	    });
+	},
+
+	showLibrary: function() {
+	    var user = Market.Model.User.getCurrentUser();
+	    
+	    console.log(user.attributes);
+	    user.fetch({
+		success: function(user) {
+		    console.log(user.attributes);
+		    var library = user.library();
+		    library.fetch({
+			success: function(library) {
+			    console.log("Successfully Loaded");
+			    console.log(library);
+			    $("#content").empty();
+			    new Market.Views.LibraryView({
+				user: user,
+				library: library
+			    });
+			},
+			error: function () {
+			    console.log("Loading error");
+			}
+		    });
+		},
+		error: loadError
+	    });
+
+	    function loadError(entity) {
+		console.log("Load error");
+	    }
 	}
     });
 
