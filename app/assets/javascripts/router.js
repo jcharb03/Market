@@ -26,6 +26,8 @@ var Market = (function (Market) {
 		},
 		error:function() {
 		    console.log("Error");
+		    $("#content").empty();
+		    new Market.Views.MediumDetailView({model: null});
 		}
 	    });
 	},

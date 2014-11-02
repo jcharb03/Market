@@ -36,21 +36,28 @@ var Market = (function (Market) {
 	el: '#content',
 	initialize: function() {
 	    this.template = _.template($("#media-template").html());
+	    this.missingTemplate = _.template($("#missing-media-template").html());
 	    this.render();
 	},
 	
 	render : function () {
-	    this.$el.html(this.template(this.bindVar()));
+	    var template = this.model ? 
+		this.template : 
+		this.missingTemplate;
+	    this.$el.html(template(this.bindVar()));
 	    return this;
 	},
 
 	bindVar: function () {
-	    return _.chain(this.model.attributes)
+	    const kind = this.model ? this.model.get("kind") : "";
+	    const authorLabel = this.model && this.model.get("kind");
+
+	    return _.chain(this.model ? this.model.attributes : {})
 		.clone()
 		.extend({
-		    authorLabel: getAuthorLabel(this.model.get("kind")),
+		    authorLabel: getAuthorLabel(kind),
 		    createdLabel:'Year created',
-		    glyphicon: getGlyph(this.model.get("kind"))
+		    glyphicon: getGlyph(kind)
 		    
 		})
 		.value();
