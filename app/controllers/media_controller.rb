@@ -10,6 +10,12 @@ class MediaController < ApplicationController
     medium_id = params[:id]
     
     media = user_id ? User.find(user_id).media : Medium.all
-    render json: media.find(medium_id).as_json
+    medium = media.find_by_id medium_id
+    
+    unless medium.nil?
+      render json: medium.as_json
+    else
+      render status: 404, text: "Medium not found"
+    end
   end
 end
