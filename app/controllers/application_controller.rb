@@ -4,6 +4,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def getUsername
-    @userName = User.find(1).name
+    @userName = User.all.first.name
+  end
+  
+  def getUserId
+    @userId = User.all.first.id
+  end
+  
+  def getSampleMediumId
+    userId = User.all.first.id
+    @mediaId = User.find(userId).media.first.id
   end
 end
