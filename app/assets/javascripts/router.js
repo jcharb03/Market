@@ -44,13 +44,6 @@ var Market = (function (Market) {
 		    console.log("failed to fetch model");
 		}
 	    });
-	},
-	
-	execute: function(cb, args) {
-	    new BannerView();
-	    new MenuView();
-	    console.log("Switching");
-	    cb.apply(args);
 	}
     });
 
