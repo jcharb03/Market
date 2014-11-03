@@ -21,7 +21,7 @@ var Market = (function (Market) {
 		    aux: res.secondary_info,
 		    owner: res.user_id
 		})
-		.pick("title","author", "created_at", "created", "aux", "kind", "owner")
+		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id")
 		.value();
 	}
     });
