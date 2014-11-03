@@ -93,6 +93,19 @@ var Market = (function (Market) {
 	}
     });
 
+
+    var cell = Backbone.View.extend({
+	initialize: function() {
+	    this.template = _.template($("#medium-cell-template").html());
+	    this.render();
+	},
+	render: function () {
+	    this.$el.html(this.template(getVariables(this.model)));
+	}
+    });
+
+    Market.Views.MediumCell = cell;
+
     templateLoader.on("load:templates", function() {
 	var standard = new Market.Model.Medium({id: window.mediumId});
 	standard.fetch({
@@ -138,6 +151,17 @@ var Market = (function (Market) {
 	    str.substring(1).toLowerCase();
     }
 
+    function getVariables(model) {
+	const kind = model ? model.get("kind") : "";
+	return _.chain(model ? model.attributes : {})
+	    .clone()
+	    .extend({
+		authorLabel: getAuthorLabel(kind),
+		createdLabel:'Year created',
+		glyphicon: getGlyph(kind)
+	    })
+	    .value();
+    }
 })(Market || {});
 
 

@@ -33,4 +33,9 @@ class TemplatesController < ApplicationController
   def missingMedia
 
   end
+
+  def mediumCell
+
+  end
+
 end
