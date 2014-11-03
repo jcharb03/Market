@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :getUsername
+  before_filter :getUsername, :getUserId, :getSampleMediumId
 
   def home
 

@@ -1,15 +1,13 @@
-# Single inheritance plan
-
 class CreateMedia < ActiveRecord::Migration
   def change
     create_table :media do |t|
-      t.string :title
-      t.string :author
-      t.string :type
-      t.string :secondary_info #plateform or album
+      t.string   :title
+      t.string   :author
+      t.string   :kind
+      t.string   :secondary_info
+      t.belongs_to :user
       t.datetime :year_created
       
-      t.belongs_to :user
       t.timestamps
     #testing shite
     end
