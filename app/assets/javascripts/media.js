@@ -31,7 +31,7 @@ var Market = (function (Market) {
     });
 
 
-    //Bind the Media Vies
+    //Bind the Media Views
     Market.Views.MediumDetailView = Backbone.View.extend({
 	el: '#content',
 	initialize: function() {
