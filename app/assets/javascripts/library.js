@@ -8,12 +8,24 @@ var Market = (function (Market) {
 	    this.render();
 	},
 	render: function() {
-	    var data = [1, 2, 3, 4];
-	    this.$el.html(this.template({data: data}));
+	    var self = this
+	    this.$el.html(this.template());
 
-	    var library = this.model.library();
-	    library.fetch({
+	    this.model.library.fetch({
 		success:function(library){
+		    var views = library.map(function(medium) {
+			var view = new Market.Views.MediumCell({
+			    model: medium
+			});
+			view.$("a").first().attr("href", "/#/media/"+medium.get("id"));
+			console.log(medium.attributes);
+			return view;
+		    });
+		    
+		    views.forEach(function(view) {
+			self.$el.find("#mediaList").append(view.$el);
+		    });
+
 		    console.log("Rendered library");
 		},
 		error:function(library){

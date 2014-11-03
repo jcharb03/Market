@@ -54,18 +54,11 @@ var Market = (function (Market) {
 		success: function(user) {
 		    console.log(user.attributes);
 		    var library = user.library();
-		    library.fetch({
-			success: function(library) {
-			    console.log("Successfully Loaded");
-			    console.log(library);
-			    $("#content").empty();
-			    new Market.Views.LibraryView({
-				user: user,
-				library: library
-			    });
-			},
-			error: function () {
-			    console.log("Loading error");
+		    $("#content").empty();
+		    new Market.Views.LibraryView({
+			model: {
+			    user: user,
+			    library: library
 			}
 		    });
 		},
