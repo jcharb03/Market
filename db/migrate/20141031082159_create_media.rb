@@ -9,6 +9,7 @@ class CreateMedia < ActiveRecord::Migration
       t.datetime :year_created
       
       t.timestamps
+    #testing shite
     end
   end
 end
