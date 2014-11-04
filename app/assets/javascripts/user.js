@@ -7,12 +7,23 @@ var Market = (function (Market) {
 	    zipcode: null,
 	    email: null
 	},
+	hasBeenFetched: false,
 	library: function() {
-	    var url = "/users/"+this.get("id")+"/media";
-	    console.log(url);
-	    var ret = new Market.Model.Media();
-	    ret.url = url;
-	    return ret;
+	    return this.get("library") || getNewLibrary.call(this);
+	    function getNewLibrary() {
+		console.log("creating library");
+		var url = "/users/"+this.get("id")+"/media";
+		var myLibrary = new Market.Model.Media();
+		myLibrary.url = url;
+		this.set("library", myLibrary);
+		var self = this;
+		myLibrary.fetch({
+		    success: function() {
+			self.hasBeenFetched = true;
+		    }
+		});
+		return myLibrary;
+	    }
 	}
     });
 

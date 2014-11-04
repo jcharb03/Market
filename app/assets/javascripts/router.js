@@ -11,7 +11,11 @@ var Market = (function (Market) {
 	addMedium: function() {
 	    console.log("Loading add Medium");
 	    $("#content").empty();
-	    new Market.Views.AddMediumView();
+	    if (!_.isNull(window.addPanel)) {
+		window.addPanel = new Market.Views.AddMediumView();
+	    } else {
+		$("#content").html(window.addPanel.el);
+	    }
 	},
 
 	showMedium: function(id) {
@@ -48,19 +52,23 @@ var Market = (function (Market) {
 
 	showLibrary: function() {
 	    var user = Market.Model.User.getCurrentUser();
-	    
-	    console.log(user.attributes);
 	    user.fetch({
 		success: function(user) {
-		    console.log(user.attributes);
 		    var library = user.library();
+		    
 		    $("#content").empty();
-		    new Market.Views.LibraryView({
-			model: {
-			    user: user,
-			    library: library
-			}
-		    });
+
+		    if ( !_.isNull(window.libPanel) ) {
+			window.libPanel = new Market.Views.LibraryView({
+			    model: {
+				user: user,
+				library: library
+			    }
+			});
+		    } else {
+			$("#content").html(window.libPanel.el);
+		    }
+		    
 		},
 		error: loadError
 	    });
@@ -73,6 +81,10 @@ var Market = (function (Market) {
 
     Backbone.history.start();
     Market.router = new Market.Router();
+
+    templateLoader.on("load:templates", function() {
+	Market.router.navigate("/library", { trigger: true });
+    });
 
     return Market;
 })(Market || {});
