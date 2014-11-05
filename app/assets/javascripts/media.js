@@ -4,7 +4,6 @@ var Market = (function (Market) {
     Market.Model = Market.Model || {};
     
     Market.Model.Medium = Backbone.Model.extend({
-	urlRoot: '/media',
 	defaults: {
 	    title: "",
 	    author: "",
@@ -14,6 +13,11 @@ var Market = (function (Market) {
 	    owner: -1
 	},
 	
+	initialize: function() {
+	    if ( this.get("id") ) 
+		this.url = "/media/" + this.get("id");
+	},
+
 	parse: function (res) {
 	    return _.chain(res)
 		.extend({
@@ -23,17 +27,36 @@ var Market = (function (Market) {
 		})
 		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id")
 		.value();
+	},
+
+	toJSON: function() {
+	    var cached, ret;
+	    ret =  _.chain(this.attributes)
+		.clone()
+		.tap(function(tmp){ cached = tmp; })
+		.extend({
+		    year_created: cached.created,
+		    secondary_info: cached.aux,
+		    user_id: cached.owner
+		})
+		.pick("title", "author", "year_created", "secondary_info", "kind", "user_id", "id")
+		.value();
+	    return ret;
 	}
     });
     
     Market.Model.Media = Backbone.Collection.extend({
-	model: Market.Model.Medium
+	model: Market.Model.Medium,
+	url: "/media"
     });
 
 
     //Bind the Media Views
     Market.Views.MediumDetailView = Backbone.View.extend({
 	el: '#content',
+	events: {
+	    "click #close" : "deleteMedium"
+	},
 	initialize: function() {
 	    this.template = _.template($("#media-template").html());
 	    this.missingTemplate = _.template($("#missing-media-template").html());
@@ -46,6 +69,14 @@ var Market = (function (Market) {
 		this.missingTemplate;
 	    this.$el.html(template(this.bindVar()));
 	    return this;
+	},
+	
+	deleteMedium: function () {
+	    this.model.destroy({
+		success:function() {
+		    Market.router.navigate("library", { trigger: true });
+		}
+	    });
 	},
 
 	bindVar: function () {
@@ -69,7 +100,8 @@ var Market = (function (Market) {
 	el: '#content',
 
 	events: {
-	    "change select": "updateLabels"
+	    "change select": "updateLabels",
+	    "click #create-button": "addMedia"
 	},
 	initialize: function() {
 	    this.template = _.template($("#add-media-template").html());
@@ -77,6 +109,11 @@ var Market = (function (Market) {
 
 	    this.authorLabel = this.$("#author-label");
 	    this.auxLabel = this.$("#aux-label");
+
+	    this.title = this.$("#title");
+	    this.kind = this.$("#kind");
+	    this.aux = this.$("#aux");
+	    this.author = this.$("#author");
 	},
 	
 	render : function () {
@@ -90,9 +127,39 @@ var Market = (function (Market) {
 	    kind = kind.toLowerCase();
 	    this.authorLabel.html(capitalize(getAuthorLabel(kind)));
 	    this.auxLabel.html(capitalize(getAuxLabel(kind)));
+	},
+
+	addMedia: function() {
+	    
+	    var library = Market.Model.User.getCurrentUser().library();
+	    console.log(library);
+	    library.create(this.attr(), {
+		success: function() {
+		    Market.router.navigate("library", { trigger: true });
+		}
+	    });
+	    
+	    console.log("adding media");
+	},
+
+	attr: function() {
+	    return {
+		title: this.title.val(),
+		aux: this.aux.val(),
+		kind: this.getKind(),
+		author: this.author.val(),
+		owner: window.uid
+	    };
+	},
+
+	getKind: function() {
+	    return this.$("#kind option:selected").text().toLowerCase();
 	}
     });
 
+    var addPanel = new Market.Views.AddMediumView();
+    Market.singleton = Market.singleton || {};
+    Market.singleton.AddPanel = addPanel;
 
     var cell = Backbone.View.extend({
 	initialize: function() {
@@ -106,15 +173,6 @@ var Market = (function (Market) {
 
     Market.Views.MediumCell = cell;
 
-    templateLoader.on("load:templates", function() {
-	var standard = new Market.Model.Medium({id: window.mediumId});
-	standard.fetch({
-	    success: function (standard) {
-		new Market.Views.MediumDetailView({ model: standard });
-	    }
-	});
-    });
-
     return Market;
 
     function getAuthorLabel(kind) {
@@ -127,7 +185,6 @@ var Market = (function (Market) {
 
     function getAuxLabel(kind) {
 	return {
-	    music: "album",
 	    game: "platform"
 	}[kind] || "genre";
     }
