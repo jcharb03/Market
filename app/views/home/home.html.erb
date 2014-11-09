@@ -4,6 +4,8 @@
 <link type="text/html" rel="import" href="/templates/library.html" id="library-template" />
 <link type="text/html" rel="import" href="/templates/media.html" id="media-template" />
 <link type="text/html" rel="import" href="/templates/addMedia.html" id="add-media-template" />
+<link type="text/html" rel="import" href="/templates/missingMedia.html" id="missing-media-template" />
+<link type="text/html" rel="import" href="/templates/mediumCell.html" id="medium-cell-template" />
 <% end %>
 
 <% content_for :backbone do %>
@@ -12,6 +14,7 @@
 <%= javascript_include_tag 'menu' %>
 <%= javascript_include_tag 'library' %>
 <%= javascript_include_tag 'media' %> 
+<%= javascript_include_tag 'user' %>
 <% end %>
 
 <div id="canvas">

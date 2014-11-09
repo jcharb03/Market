@@ -6,13 +6,23 @@ var Market = (function (Market) {
 	initialize: function () {
 	    this.template = _.template($("#library-template").html());
 	    this.render();
+	    var self = this;
+	    this.model.library.on("add", function (model) {
+		self.$("#mediaList").append(getView(model).el);
+	    });
 	},
 	render: function() {
-	    var data = [1, 2, 3, 4];
-	    this.$el.html(this.template({data: data}));
+	    this.$el.html(this.template());
+	    console.log("Rendered library");
 	    return this;
 	}
     });
 
     return Market;
+    
+    function getView(model) {
+	var view = new Market.Views.MediumCell({ model: model });
+	view.$("a").first().attr("href", "/#/media/"+model.get("id"));
+	return view;	
+    }
 })(Market || {});
