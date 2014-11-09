@@ -11,6 +11,7 @@ gem 'sass-rails', '~> 4.0.3'
 #Use bootstrap
 gem 'bootstrap-sass', '~> 3.3.0'
 
+
 #Use browser prefixes //Very helpfull
 #gem 'autoprefixer-rails'
 
@@ -37,8 +38,7 @@ gem 'spring',        group: :development
 gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-#gem 'unicorn'
-gem 'tzinfo-data'
+#gem 'unicorn', group: :production
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -47,3 +47,7 @@ gem 'tzinfo-data'
 # gem 'debugger', group: [:development, :test]
 
 gem 'backbone-rails'
+
+gem 'tzinfo'
+
+gem 'tzinfo-data'
