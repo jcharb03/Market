@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   
   get 'templates/:template' => 'templates#root'
 
+  post 'authenticate' => 'authentication#authenticate'
+  get  'login'        => 'authentication#login'
+
   resources :users do 
     resources :media
   end

@@ -1,4 +1,6 @@
 class MediaController < ApplicationController
+  before_filter :getUser, :userPermission?
+
   #show all media
   def index
     user_id = params[:user_id]
@@ -55,5 +57,10 @@ class MediaController < ApplicationController
   private
   def media_params
     params.permit(:user_id, :title, :author, :secondary_info, :kind)
+  end
+
+  def userPermission?
+    puts params[:user_id] == @user.id
+    #TODO: deny in some way
   end
 end
