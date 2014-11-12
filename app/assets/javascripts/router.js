@@ -1,6 +1,7 @@
 var Market = (function (Market) {
     
     Market.Router = Backbone.Router.extend({
+	currentView: null,
 	routes: {
 	    "" : "home",
 	    "add" : "addMedium",
@@ -11,11 +12,11 @@ var Market = (function (Market) {
 	addMedium: function() {
 	    console.log("Loading add Medium");
 	    $("#content").empty();
-	    if (!_.isNull(window.addPanel)) {
-		window.addPanel = new Market.Views.AddMediumView();
-	    } else {
-		$("#content").html(window.addPanel.el);
-	    }
+	    
+	    if ( this.currentView ) 
+		this.currentView.remove();
+	    this.currentView = new Market.Views.AddMediumView();
+	    $("#content").html(this.currentView.el);
 	},
 
 	showMedium: function(id) {

@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   post 'authenticate' => 'authentication#authenticate'
   get  'login'        => 'authentication#login'
+  get  'signup'       => 'authentication#signup'
+  post 'signupHook'   => 'authentication#signupHook'
 
   resources :users do 
     resources :media

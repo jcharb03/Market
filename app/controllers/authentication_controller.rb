@@ -28,4 +28,24 @@ class AuthenticationController < ApplicationController
     @failed_attempt |= params[:failure]
   end
 
+  def signup
+    
+  end
+
+  def signupHook
+    name = params[:session][:name]
+    phone = params[:session][:phone]
+    zipcode = params[:session][:zipcode]
+    email = params[:session][:email]
+    password = params[:session][:password]
+
+    new_user = User.new name: name, phone: phone, zipcode: zipcode, email: email, password: password, password_confirmation: password
+
+    if new_user.save
+      redirect_to "/" if new_user
+    else
+      render status: 403, text: "would result in duplicate user"
+    end
+  end
+  
 end

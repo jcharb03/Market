@@ -97,7 +97,7 @@ var Market = (function (Market) {
     });
 
     Market.Views.AddMediumView = Backbone.View.extend({
-	el: '#content',
+	tagName: "div",
 
 	events: {
 	    "change select": "updateLabels",
