@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
-
+  protect_from_forgery :except => :create 
+  
   def create
     kind = params[:kind]
     title = params[:title]
