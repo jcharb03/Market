@@ -20,8 +20,6 @@ var Market = (function (Market) {
 	},
 
 	showMedium: function(id) {
-	    console.log("Routed show");
-	    console.log("id: " + id);
 	    var medium = new Market.Model.Medium({id: id});
 	    medium.fetch({
 		success:function(medium){
