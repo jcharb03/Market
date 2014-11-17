@@ -10,9 +10,8 @@
   <%= yield :templates %>
   <%= yield :backbone %>
 
-
   <script>
-    window.uid = <%= @userId %>;
+    window.uid = <%= @user ? @user.id : -1 %>;
   </script>
 </head>
 <body>
