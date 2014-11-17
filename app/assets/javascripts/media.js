@@ -53,7 +53,6 @@ var Market = (function (Market) {
 
     //Bind the Media Views
     Market.Views.MediumDetailView = Backbone.View.extend({
-	el: '#content',
 	events: {
 	    "click #close" : "deleteMedium"
 	},
@@ -97,8 +96,6 @@ var Market = (function (Market) {
     });
 
     Market.Views.AddMediumView = Backbone.View.extend({
-	tagName: "div",
-
 	events: {
 	    "change select": "updateLabels",
 	    "click #create-button": "addMedia"
