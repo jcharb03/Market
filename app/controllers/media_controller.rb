@@ -8,7 +8,7 @@ class MediaController < ApplicationController
     media = Medium.all
     media = User.find(user_id).media if user_id
 
-    render json: media.as_json
+    render json: media.to_json(include: {tags: {only: :name}})
   end
 
   #show single medium
@@ -20,7 +20,7 @@ class MediaController < ApplicationController
     medium = media.find_by_id medium_id
     
     unless medium.nil?
-      render json: medium.as_json
+      render json: medium.to_json(include: {tags: {only: :name}})
     else
       render status: 404, text: "Medium not found"
     end
@@ -32,7 +32,15 @@ class MediaController < ApplicationController
 
     if user
       media = Medium.create media_params
-      render json: media.as_json, status: 200
+
+      if params[:tags]
+        params[:tags].each do |tag|
+          tag = Tag.find_or_create_by(name: tag[:name])
+          media.tags << tag
+        end
+      end
+
+      render status: 200, json: media.to_json(include: { tags: {only: :name}})
     else
       render status: 403, text: "Media needs to have a User"
     end
@@ -46,17 +54,17 @@ class MediaController < ApplicationController
     media = Medium.find_by_id params[:id]
 
     if media
-      render json: media.as_json, status: 200
+      render status: 200, json: media.to_json(include: { tags: {only: :name}})
       media.destroy
     else
       render status: 404, text: "Media not found"
     end
   end
 
-
   private
   def media_params
-    params.permit(:user_id, :title, :author, :secondary_info, :kind)
+    params.delete :medium
+    params.permit(:user_id, :title, :author, :secondary_info, :kind, :year_created)
   end
 
   def userPermission?

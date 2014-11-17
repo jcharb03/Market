@@ -1,4 +1,5 @@
 class Medium < ActiveRecord::Base
+  has_and_belongs_to_many :tags
   belongs_to :user
 
   default_scope {
