@@ -25,7 +25,7 @@ var Market = (function (Market) {
 		    aux: res.secondary_info,
 		    owner: res.user_id
 		})
-		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id")
+		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id", "tags")
 		.value();
 	},
 
@@ -39,7 +39,7 @@ var Market = (function (Market) {
 		    secondary_info: cached.aux,
 		    user_id: cached.owner
 		})
-		.pick("title", "author", "year_created", "secondary_info", "kind", "user_id", "id")
+		.pick("title", "author", "year_created", "secondary_info", "kind", "user_id", "id", "tags")
 		.value();
 	    return ret;
 	}
@@ -114,6 +114,7 @@ var Market = (function (Market) {
 	    this.kind = this.$("#kind");
 	    this.aux = this.$("#aux");
 	    this.author = this.$("#author");
+	    this.tags = this.$("#tags");
 	},
 	
 	render : function () {
@@ -143,13 +144,23 @@ var Market = (function (Market) {
 	},
 
 	attr: function() {
+
+	    var tag_input = this.tags.val().trim().split(/[^A-Za-z0-9]/);
+	    var tags_obj = _.map(tag_input, nestName);
 	    return {
 		title: this.title.val(),
 		aux: this.aux.val(),
 		kind: this.getKind(),
 		author: this.author.val(),
-		owner: window.uid
+		owner: window.uid,
+		tags: tags_obj
 	    };
+
+	    function nestName(tag) {
+		return { 
+		    name: tag
+		};
+	    }
 	},
 
 	getKind: function() {
