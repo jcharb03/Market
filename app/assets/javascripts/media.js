@@ -81,13 +81,17 @@ var Market = (function (Market) {
 	bindVar: function () {
 	    const kind = this.model ? this.model.get("kind") : "";
 	    const authorLabel = this.model && this.model.get("kind");
-
+	    var tags = _.map(this.model.get("tags"), function(tag) {
+		return tag.name;
+	    });
+	    
 	    return _.chain(this.model ? this.model.attributes : {})
 		.clone()
 		.extend({
 		    authorLabel: getAuthorLabel(kind),
 		    createdLabel:'Year created',
-		    glyphicon: getGlyph(kind)
+		    glyphicon: getGlyph(kind),
+		    tags: tags.join(", ")
 		    
 		})
 		.value();
