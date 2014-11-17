@@ -72,3 +72,11 @@ input, select, button {
   font-weight: bold;
 }
 
+#mediaList {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:400px;
+}
+
+
+
