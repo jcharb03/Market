@@ -189,10 +189,10 @@ var Market = (function (Market) {
 
     function getAuthorLabel(kind) {
 	return {
-	    music: 'artist',
-	    movie: 'director',
-	    game:  'studio',
-	}[kind] || 'author';
+	    music: 'Artist',
+	    movie: 'Director',
+	    game:  'Studio',
+	}[kind] || 'Author';
     }
 
     function getAuxLabel(kind) {
