@@ -48,7 +48,6 @@ gem 'spring',        group: :development
 gem 'backbone-rails'
 
 gem 'tzinfo'
-
 gem 'tzinfo-data'
 
 group :development, :test do
@@ -62,3 +61,5 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
 end
+
+

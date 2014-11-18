@@ -29,6 +29,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (3.1.2.20141016)
+      execjs
     backbone-rails (1.1.2)
       rails (>= 3.0.0)
     bootstrap-sass (3.3.0.1)
@@ -198,6 +200,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  autoprefixer-rails
   backbone-rails
   bootstrap-sass (~> 3.3.0)
   capybara
