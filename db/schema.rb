@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110204844) do
+ActiveRecord::Schema.define(version: 20141114004428) do
 
   create_table "media", force: true do |t|
     t.string   "title"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20141110204844) do
     t.datetime "year_created"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "media_tags", id: false, force: true do |t|
+    t.integer "tag_id"
+    t.integer "medium_id"
+  end
+
+  add_index "media_tags", ["tag_id", "medium_id"], name: "index_media_tags_on_tag_id_and_medium_id"
+
+  create_table "tags", force: true do |t|
+    t.string "name"
   end
 
   create_table "users", force: true do |t|

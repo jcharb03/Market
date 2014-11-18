@@ -3,6 +3,11 @@
 @import "bootstrap";
 
 
+body {
+  background-color: darkgray;
+
+}
+
 #banner {
 	margin-top: 20px;
 }
@@ -38,4 +43,45 @@
 a { 
     font-family: 'Roboto Slab', serif;
 }
+
+.field {
+  display: inline-block;
+  margin-left: 50px;
+}
+
+.buttonDelete {
+  float: right;
+  margin-right: 20px;
+}
+
+.mediaType {
+  margin-left: 30px;
+}
+
+td {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.buttonCreate {
+  float: right;
+  margin-right: 30px;
+}
+
+input, select, button {
+  border: 1px maroon solid;
+  background-color: lightgray;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+#mediaList {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:400px;
+}
+
+
 

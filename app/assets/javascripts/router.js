@@ -11,7 +11,6 @@ var Market = (function (Market) {
 
 	addMedium: function() {
 	    console.log("Loading add Medium");
-	    $("#content").empty();
 	    
 	    if ( this.currentView ) 
 		this.currentView.remove();
@@ -23,15 +22,17 @@ var Market = (function (Market) {
 	    var medium = new Market.Model.Medium({id: id});
 	    medium.fetch({
 		success:function(medium){
-		    console.log(medium);
-		    console.log("Got medium");
-		    $("#content").empty();
-		    new Market.Views.MediumDetailView({model: medium});
+		    if ( this.currentView )
+			this.currentView.remove();
+		    this.currentView = new Market.Views.MediumDetailView({model: medium});
+		    $("#content").html(this.currentView.el);
 		},
 		error:function() {
 		    console.log("Error");
 		    $("#content").empty();
-		    new Market.Views.MediumDetailView({model: null});
+		    if ( this.currentView ) 
+			this.currentView.remove();
+		    this.currentView = new Market.Views.MediumDetailView({model: null});
 		}
 	    });
 	},
@@ -55,19 +56,16 @@ var Market = (function (Market) {
 		success: function(user) {
 		    var library = user.library();
 		    
-		    $("#content").empty();
-
-		    if ( !_.isNull(window.libPanel) ) {
-			window.libPanel = new Market.Views.LibraryView({
-			    model: {
-				user: user,
-				library: library
-			    }
-			});
-		    } else {
-			$("#content").html(window.libPanel.el);
-		    }
+		    if ( this.currentView )
+			this.currentView.remove();
+		    this.currentView = new Market.Views.LibraryView({
+			model: {
+			    user: user,
+			    library: library
+			}
+		    });
 		    
+		    $("#content").html(this.currentView.el);
 		},
 		error: loadError
 	    });
@@ -82,7 +80,7 @@ var Market = (function (Market) {
     Market.router = new Market.Router();
 
     templateLoader.on("load:templates", function() {
-	Market.router.navigate("/library", { trigger: true });
+	Market.router.navigate("library", { trigger: true });
     });
 
     return Market;

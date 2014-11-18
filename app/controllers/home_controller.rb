@@ -1,8 +1,7 @@
 class HomeController < ApplicationController
-  before_filter :getUser, :getUsername, :getUserId
+  before_filter :getUser
   
   def home
 
   end
-
 end

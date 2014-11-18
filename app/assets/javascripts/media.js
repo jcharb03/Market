@@ -25,7 +25,7 @@ var Market = (function (Market) {
 		    aux: res.secondary_info,
 		    owner: res.user_id
 		})
-		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id")
+		.pick("title","author", "created_at", "created", "aux", "kind", "owner", "id", "tags")
 		.value();
 	},
 
@@ -39,7 +39,7 @@ var Market = (function (Market) {
 		    secondary_info: cached.aux,
 		    user_id: cached.owner
 		})
-		.pick("title", "author", "year_created", "secondary_info", "kind", "user_id", "id")
+		.pick("title", "author", "year_created", "secondary_info", "kind", "user_id", "id", "tags")
 		.value();
 	    return ret;
 	}
@@ -53,7 +53,6 @@ var Market = (function (Market) {
 
     //Bind the Media Views
     Market.Views.MediumDetailView = Backbone.View.extend({
-	el: '#content',
 	events: {
 	    "click #close" : "deleteMedium"
 	},
@@ -82,13 +81,17 @@ var Market = (function (Market) {
 	bindVar: function () {
 	    const kind = this.model ? this.model.get("kind") : "";
 	    const authorLabel = this.model && this.model.get("kind");
-
+	    var tags = _.map(this.model.get("tags"), function(tag) {
+		return tag.name;
+	    });
+	    
 	    return _.chain(this.model ? this.model.attributes : {})
 		.clone()
 		.extend({
 		    authorLabel: getAuthorLabel(kind),
 		    createdLabel:'Year created',
-		    glyphicon: getGlyph(kind)
+		    glyphicon: getGlyph(kind),
+		    tags: tags.join(", ")
 		    
 		})
 		.value();
@@ -97,8 +100,6 @@ var Market = (function (Market) {
     });
 
     Market.Views.AddMediumView = Backbone.View.extend({
-	tagName: "div",
-
 	events: {
 	    "change select": "updateLabels",
 	    "click #create-button": "addMedia"
@@ -114,6 +115,7 @@ var Market = (function (Market) {
 	    this.kind = this.$("#kind");
 	    this.aux = this.$("#aux");
 	    this.author = this.$("#author");
+	    this.tags = this.$("#tags");
 	},
 	
 	render : function () {
@@ -143,13 +145,23 @@ var Market = (function (Market) {
 	},
 
 	attr: function() {
+
+	    var tag_input = this.tags.val().trim().split(/[^A-Za-z0-9]/);
+	    var tags_obj = _.map(tag_input, nestName);
 	    return {
 		title: this.title.val(),
 		aux: this.aux.val(),
 		kind: this.getKind(),
 		author: this.author.val(),
-		owner: window.uid
+		owner: window.uid,
+		tags: tags_obj
 	    };
+
+	    function nestName(tag) {
+		return { 
+		    name: tag
+		};
+	    }
 	},
 
 	getKind: function() {
@@ -177,10 +189,10 @@ var Market = (function (Market) {
 
     function getAuthorLabel(kind) {
 	return {
-	    music: 'artist',
-	    movie: 'director',
-	    game:  'studio',
-	}[kind] || 'author';
+	    music: 'Artist',
+	    movie: 'Director',
+	    game:  'Studio',
+	}[kind] || 'Author';
     }
 
     function getAuxLabel(kind) {
