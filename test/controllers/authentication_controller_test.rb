@@ -32,6 +32,9 @@ class AuthenticationControllerTest < ActionController::TestCase
 
 
   test "login works" do
+    User.create name: "Jeni", phone: "111-111-1111", zipcode: '11111', email: 'jeni@gmail.com',
+                        password: "foobar", password_confirmation: "foobar"
+    
     post :authenticate, :session => { :email => "jeni@gmail.com", :password => "foobar" }
     assert_redirected_to controller: "home", action: 'home'
   end

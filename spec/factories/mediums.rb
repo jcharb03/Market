@@ -1,5 +1,6 @@
 FactoryGirl.define do
-	factory :medium do |f|
-		f.title "Halo"
-	end
+  factory :medium do |f|
+    f.title "Halo"
+    f.kind "game"
+  end
 end
