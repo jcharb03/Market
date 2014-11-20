@@ -26,14 +26,13 @@ class AuthenticationControllerTest < ActionController::TestCase
     assert_not new_user.save
   end
   test "login with invalid password" do
-    params[:session][:email] = "jeni@gmail.com"
-    params[:session][:password] = "pass"
-    assert_status :error
+    post :authenticate, { session: { email: "jeni@gmail.com", password: "pass"} }
+    assert_nil session[:user_id]
   end
+
+
   test "login works" do
-    post :login, :user => { :email => "jeni@gmail.com", :password => "foobar" }
-    assert_not_nil session[:user_id]
-    assert_response :redirect
-    assert_redirected_to :action => '/'
-    end
+    post :authenticate, :session => { :email => "jeni@gmail.com", :password => "foobar" }
+    assert_redirected_to controller: "home", action: 'home'
+  end
 end
