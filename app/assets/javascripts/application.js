@@ -33,8 +33,7 @@ var templateLoader = (function (Backbone,_, $) {
 	
 	var progress, links, link_ids;
 	
-	links = $('link[rel="import"]');
-	
+	links = $('script[rel="import"]');
 	link_ids = links.map(function () {
 	    return $(this).attr('id');
 	});
