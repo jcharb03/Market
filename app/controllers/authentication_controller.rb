@@ -38,7 +38,8 @@ class AuthenticationController < ApplicationController
       SignupMailer.signup(new_user).deliver
       redirect_to "/" if new_user
     else
-      render status: 403, text: "would result in duplicate user"
+      
+      render status: 403, json: new_user.errors.messages
     end
   end
   
