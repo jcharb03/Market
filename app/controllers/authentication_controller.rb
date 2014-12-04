@@ -35,6 +35,7 @@ class AuthenticationController < ApplicationController
     new_user = User.new name: name, phone: phone, zipcode: zipcode, email: email, password: password, password_confirmation: password
 
     if new_user.save
+      SignupMailer.signup(new_user).deliver
       redirect_to "/" if new_user
     else
       render status: 403, text: "would result in duplicate user"
