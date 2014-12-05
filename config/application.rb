@@ -20,8 +20,11 @@ module Market
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+<<<<<<< HEAD
+=======
     config.serve_static_assets = true
 
+>>>>>>> upstream/master
     #create a fact
     config.generators do |g|
       g.test_framework :rspec,
