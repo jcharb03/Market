@@ -18,7 +18,8 @@ class PasswordResetRequestController < ApplicationController
       puts @hash
       if reset_request.save
         @fulfill_link = "/password_reset_request/#{@hash}"
-        #redirect_to '/'
+        PasswordResetMailer.link_to_reset_password(@fulfill_link, user).deliver
+        redirect_to "/login"
       else
         render code: 500, text: "Unable to create code"
       end
@@ -29,7 +30,19 @@ class PasswordResetRequestController < ApplicationController
 
   # Redeem the reset code
   def show
-
+    @reset_request = PasswordResetRequest.find_by(link: params[:id])
   end
-  
+
+  def update
+    @reset_request = PasswordResetRequest.find_by(link: params[:id])
+    new_password = params[:reset][:new_password]
+    puts new_password
+    puts @reset_request
+    puts @reset_request.is_valid?
+    puts @reset_request.user
+    if new_password and not @reset_request.nil? and @reset_request.is_valid?
+      @reset_request.fulfill new_password
+      redirect_to "/login"
+    end
+  end
 end
